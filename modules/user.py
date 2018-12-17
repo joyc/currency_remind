@@ -1,4 +1,5 @@
 from modules.database import Database
+from passlib.hash import pbkdf2_sha512
 
 
 class User:
@@ -7,7 +8,7 @@ class User:
         self.email = email
         self.password = password
 
-    def save_db(self):
+    def save_to_db(self):
         Database.insert_many(collection="users", data=self.json())
 
     def json(self):
@@ -16,3 +17,11 @@ class User:
             "email": self.email,
             "password": self.password
         }
+
+    @staticmethod
+    def hash_password(self, password):
+        return pbkdf2_sha512.hash(password)
+
+    @staticmethod
+    def check_password(self, password, hash_password):
+        return pbkdf2_sha512.verify(password, hash_password)

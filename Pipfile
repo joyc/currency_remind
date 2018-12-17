@@ -12,6 +12,7 @@ lxml = "*"
 html5lib = "*"
 beautifulsoup4 = "*"
 pymongo = "*"
+passlib = "*"
 
 [requires]
 python_version = "3.7"
