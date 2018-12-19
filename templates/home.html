@@ -1,35 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>hello</h1>
+<h1>汇率表</h1>
 <table class="table table-dark">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">币种</th>
+      <th scope="col">银行现金买入</th>
+      <th scope="col">银行现金卖出</th>
+      <th scope="col">银行即期买入</th>
+      <th scope="col">银行即期卖出</th>
     </tr>
   </thead>
   <tbody>
+  {% for position in range(0, 19) %}
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <th>{{ money_dict[position].currency_cn }}</th>
+      <td>{{ money_dict[position].cash_in }}</td>
+      <td>{{ money_dict[position].cash_out }}</td>
+      <td>{{ money_dict[position].sign_in }}</td>
+      <td>{{ money_dict[position].sign_out }}</td>
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
+  {% endfor %}
   </tbody>
 </table>
 {% endblock %}
