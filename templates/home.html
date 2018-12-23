@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>汇率表</h1>
+<h4>汇率表</h4>
 <table class="table table-dark">
   <thead>
     <tr>
@@ -15,7 +15,7 @@
   <tbody>
   {% for position in range(0, 19) %}
     <tr>
-      <th>{{ money_dict[position].currency_cn }}</th>
+      <td><img src="https://www.findrate.tw/img/{{money_dict[position].currency}}.png">&nbsp;&nbsp;{{ money_dict[position].currency_cn }}</td>
       <td>{{ money_dict[position].cash_in }}</td>
       <td>{{ money_dict[position].cash_out }}</td>
       <td>{{ money_dict[position].sign_in }}</td>

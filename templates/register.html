@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="/register" method="post">
+  <div class="form-group">
+    <label for="InputName">名 称</label>
+    <input type="text" class="form-control" id="InputName" name="InputName" aria-describedby="namehelp" placeholder="您的昵称">
+  </div>
+  <div class="form-group">
+    <label for="InputEmail">邮件地址</label>
+    <input type="email" class="form-control" id="InputEmail" name="InputEmail" aria-describedby="emailHelp" placeholder="您的邮件地址">
+    <small id="emailHelp" class="form-text text-muted">提醒信息将发往此信箱。</small>
+  </div>
+  <div class="form-group">
+    <label for="InputPassword">密 码</label>
+    <input type="password" class="form-control" id="InputPassword" name="InputPassword" placeholder="密码" required="required">
+  </div>
+  <p>{{ message }}</p>
+  <button type="submit" class="btn btn-primary">创 建</button>
+</form>
+{% endblock %}

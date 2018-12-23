@@ -39,7 +39,7 @@ body {
 }
 
 .cover-container {
-  max-width: 42em;
+  max-width: 47em;
 }
 
 
@@ -96,7 +96,15 @@ body {
   padding: .75rem 1.25rem;
   font-weight: 700;
 }
-
+.table {
+  width: 650px !important;
+}
+.table-dark {
+  text-align: left!important;
+}
+form {
+  text-align: left!important;
+}
 
 /*
  * Footer

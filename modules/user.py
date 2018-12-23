@@ -26,7 +26,7 @@ class User:
         return True
 
     def save_to_db(self):
-        Database.insert_many(collection="users", data=self.json())
+        Database.insert_one(collection="users", data=self.json())
 
     def json(self):
         return {
