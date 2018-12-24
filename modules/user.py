@@ -46,3 +46,7 @@ class User:
     @staticmethod
     def find_user_data(email):
         return Database.find_one(collection="users", query={"email": email})
+
+    @staticmethod
+    def update_user_email(old_email, email):
+        return Database.update(collection="users", query={"email": old_email}, data={"$set": {"email": email}})

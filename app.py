@@ -57,5 +57,26 @@ def logout():
     return redirect('/')
 
 
+@app.route('/change_email', methods=['GET', 'POST'])
+def change_email():
+    if session['email']:
+        if request.method == 'POST':
+            new_email = request.form['InputNewEmail']
+            password = request.form['InputPassword']
+            result = User.check_user(session['email'], password)
+            if result:
+                User.update_user_email(session['email'], new_email)
+                session['email'] = new_email
+                message = f"您的邮箱已更新为{new_email}"
+                return render_template("change_email.html", message=message)
+            else:
+                message = "您的密码错误！"
+                return render_template("change_email.html", message=message)
+        else:
+            return render_template("change_email.html")
+    else:
+        return redirect('/login')
+
+
 if __name__ == '__main__':
     app.run(debug=True)

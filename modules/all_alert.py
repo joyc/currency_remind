@@ -1,0 +1,38 @@
+from modules.database import Database
+
+
+class All_alert:
+    def __init__(self, email, currency, rate_exchange, price):
+        self.email = email
+        self.currency = currency
+        self.rate_exchange = rate_exchange
+        self.price = price
+
+    @staticmethod
+    def create_alert(email, currency, rate_exchange, price):
+        alert_data = Database.find_one(collection="all_alert", query={"email": email,
+                                                                      "currency": currency,
+                                                                      "rate_exchange": rate_exchange})
+        if alert_data is not None:
+            return False
+        All_alert(email, currency, rate_exchange, price).save_to_db()
+        return True
+
+    def save_to_db(self):
+        Database.insert_one(collection="all_alert", data=self.json())
+
+    def json(self):
+        return {
+            "email": self.email,
+            "currency": self.currency,
+            "rate_exchange": self.rate_exchange,
+            "price": self.price
+        }
+
+    @staticmethod
+    def find_user_alert(email, rate_exchange):
+        return Database.find_one(collection="all_alert", query={"email": email, "rate_exchange": rate_exchange})
+
+    # @staticmethod
+    # def update_user_email(old_email, email):
+    #     return Database.update(collection="users", query={"email": old_email}, data={"$set": {"email": email}})
