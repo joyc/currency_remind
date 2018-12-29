@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+    <form action="/new_alert" method="post">
+
+        <div class="form-group">
+            <label for="input_currency">币别</label>
+            <select class="form-control" id="input_currency" name="input_currency">
+                {% for position in range(0, 19) %}
+                <option value="{{ money_dict[position].currency }}">{{ money_dict[position].currency_cn }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="rate_exchange">汇率</label>
+            <select multiple class="form-control" id="rate_exchange" name="rate_exchange">
+                <option value="cash">现金汇率</option>
+                <option value="sign">即期汇率</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="bank_buy">银行买入</label>
+            <input type="text" class="form-control" id="bank_buy" aria-describedby="bank_buyHelp" placeholder="通知价格"
+                   name="bank_buy" required="required" pattern="\d+\.?\d*">
+            <small id="bank_buyHelp" class="form-text text-muted">例如: 10 或 10.1</small>
+        </div>
+        <div class="form-group">
+            <label for="bank_sale">银行卖出</label>
+            <input type="text" class="form-control" id="bank_sale" aria-describedby="bank_saleHelp" placeholder="通知价格"
+                   name="bank_sale" required="required" pattern="\d+\.?\d*">
+            <small id="bank_saleHelp" class="form-text text-muted">例如: 10 或 10.1</small>
+        </div>
+        <button type="submit" class="btn btn-primary">添加</button>
+    </form>
+{% endblock %}

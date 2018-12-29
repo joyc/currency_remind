@@ -57,6 +57,12 @@ def logout():
     return redirect('/')
 
 
+@app.route('/new_alert')
+def new_alert():
+    monen_dict, positon = Money.search_data()
+    return render_template('new_alert.html', money_dict=monen_dict)
+
+
 @app.route('/change_email', methods=['GET', 'POST'])
 def change_email():
     if session['email']:
