@@ -6,7 +6,7 @@
             <label for="input_currency">币别</label>
             <select class="form-control" id="input_currency" name="input_currency">
                 {% for position in range(0, 19) %}
-                <option value="{{ money_dict[position].currency }}">{{ money_dict[position].currency_cn }}</option>
+                <option value="{{ money_dict[position].currency_cn }}">{{ money_dict[position].currency_cn }}</option>
                 {% endfor %}
             </select>
         </div>

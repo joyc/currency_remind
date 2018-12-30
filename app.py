@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, session, redirect
 from modules.money import Money
 from modules.user import User
 from modules.database import Database
-
+from modules.all_alert import All_alert
 
 app = Flask(__name__)
 app.secret_key = "test123"
@@ -57,10 +57,38 @@ def logout():
     return redirect('/')
 
 
-@app.route('/new_alert')
+@app.route('/new_alert', methods=["GET", "POST"])
 def new_alert():
-    monen_dict, positon = Money.search_data()
-    return render_template('new_alert.html', money_dict=monen_dict)
+    if session['email']:
+        monen_dict, positon = Money.search_data()
+        if request.method == 'POST':
+            input_currency = request.form['input_currency']
+            rate_exchange = request.form['rate_exchange']
+            bank_buy = request.form['bank_buy']
+            bank_sale = request.form['bank_sale']
+            result = All_alert.create_alert(session['email'], input_currency, rate_exchange, [bank_buy, bank_sale])
+            if result:
+                message = "您的通知已经设置成功，可继续新增！"
+                currency_msg = f"币别：{input_currency}"
+                exchange_msg = "汇率：{}".format("现金汇率" if rate_exchange == "cash" else "即期汇率")
+                buy_msg = f"银行买入通知价格：￥{bank_buy}"
+                sale_msg = f"银行卖出通知价格：￥{bank_sale}"
+                return render_template("new_alert.html", monen_dict=monen_dict, message=message,
+                                       currency_msg=currency_msg, exchange_msg=exchange_msg,
+                                       buy_msg=buy_msg, sale_msg=sale_msg)
+            else:
+                message = "您的通知新增失败，请重新新增！"
+                currency_msg = f"币别：{input_currency}"
+                exchange_msg = "汇率：{}".format("现金汇率" if rate_exchange == "cash" else "即期汇率")
+                buy_msg = f"银行买入通知价格：￥{bank_buy}"
+                sale_msg = f"银行卖出通知价格：￥{bank_sale}"
+                return render_template("new_alert.html", monen_dict=monen_dict, message=message,
+                                       currency_msg=currency_msg, exchange_msg=exchange_msg,
+                                       buy_msg=buy_msg, sale_msg=sale_msg)
+        else:
+            return render_template("new_alert.html", monen_dict=monen_dict)
+    else:
+        return redirect('/login')
 
 
 @app.route('/change_email', methods=['GET', 'POST'])
