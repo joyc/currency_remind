@@ -9,6 +9,7 @@
                 <option value="{{ money_dict[position].currency_cn }}">{{ money_dict[position].currency_cn }}</option>
                 {% endfor %}
             </select>
+            <small id="input_currencyHelp" class="form-text text-muted">每种货币只能设置两种汇率通知。</small>
         </div>
         <div class="form-group">
             <label for="rate_exchange">汇率</label>
@@ -30,5 +31,10 @@
             <small id="bank_saleHelp" class="form-text text-muted">例如: 10 或 10.1</small>
         </div>
         <button type="submit" class="btn btn-primary">添加</button>
+        <p>{{ message }}</p>
+        <p>{{ currency_msg }}</p>
+        <p>{{ exchange_msg }}</p>
+        <p>{{ buy_msg }}</p>
+        <p>{{ sale_msg }}</p>
     </form>
 {% endblock %}

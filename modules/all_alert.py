@@ -31,8 +31,10 @@ class All_alert:
 
     @staticmethod
     def find_user_alert(email, rate_exchange):
-        return Database.find_one(collection="all_alert", query={"email": email, "rate_exchange": rate_exchange})
+        return Database.find(collection="all_alert", query={"email": email, "rate_exchange": rate_exchange})
 
-    # @staticmethod
-    # def update_user_email(old_email, email):
-    #     return Database.update(collection="users", query={"email": old_email}, data={"$set": {"email": email}})
+    @staticmethod
+    def update_user_alert(email, currency, rate_exchange, price):
+        return Database.update(collection="all_alert",
+                               query={"email": email, "currency": currency, "rate_exchange": rate_exchange},
+                               data={"$set": {"price": price}})

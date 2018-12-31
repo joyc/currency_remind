@@ -6,7 +6,13 @@ from modules.all_alert import All_alert
 
 app = Flask(__name__)
 app.secret_key = "test123"
-Database.initialize()
+
+
+@app.before_first_request
+def initialize():
+    Database.initialize()
+    session['email'] = session.get('email')
+    session['name'] = session.get('name')
 
 
 @app.route('/')
@@ -60,7 +66,7 @@ def logout():
 @app.route('/new_alert', methods=["GET", "POST"])
 def new_alert():
     if session['email']:
-        monen_dict, positon = Money.search_data()
+        money_dict, positon = Money.search_data()
         if request.method == 'POST':
             input_currency = request.form['input_currency']
             rate_exchange = request.form['rate_exchange']
@@ -73,20 +79,20 @@ def new_alert():
                 exchange_msg = "汇率：{}".format("现金汇率" if rate_exchange == "cash" else "即期汇率")
                 buy_msg = f"银行买入通知价格：￥{bank_buy}"
                 sale_msg = f"银行卖出通知价格：￥{bank_sale}"
-                return render_template("new_alert.html", monen_dict=monen_dict, message=message,
+                return render_template("new_alert.html", money_dict=money_dict, message=message,
                                        currency_msg=currency_msg, exchange_msg=exchange_msg,
                                        buy_msg=buy_msg, sale_msg=sale_msg)
             else:
-                message = "您的通知新增失败，请重新新增！"
+                message = "您的通知新增失败，每个币种只能新增两种通知，请重新新增！"
                 currency_msg = f"币别：{input_currency}"
                 exchange_msg = "汇率：{}".format("现金汇率" if rate_exchange == "cash" else "即期汇率")
                 buy_msg = f"银行买入通知价格：￥{bank_buy}"
                 sale_msg = f"银行卖出通知价格：￥{bank_sale}"
-                return render_template("new_alert.html", monen_dict=monen_dict, message=message,
+                return render_template("new_alert.html", money_dict=money_dict, message=message,
                                        currency_msg=currency_msg, exchange_msg=exchange_msg,
                                        buy_msg=buy_msg, sale_msg=sale_msg)
         else:
-            return render_template("new_alert.html", monen_dict=monen_dict)
+            return render_template("new_alert.html", money_dict=money_dict)
     else:
         return redirect('/login')
 
@@ -108,6 +114,24 @@ def change_email():
                 return render_template("change_email.html", message=message)
         else:
             return render_template("change_email.html")
+    else:
+        return redirect('/login')
+
+
+@app.route('/cash_alert')
+def cash_alert():
+    if session['email']:
+        cash_data = All_alert.find_user_alert(session['email'], "cash")
+        return render_template('cash_alert.html', cash_data=cash_data)
+    else:
+        return redirect('/login')
+
+
+@app.route('/sign_alert')
+def sign_alert():
+    if session['email']:
+        sign_data = All_alert.find_user_alert(session['email'], "sign")
+        return render_template('sign_alert.html', sign_data=sign_data)
     else:
         return redirect('/login')
 
