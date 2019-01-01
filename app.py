@@ -136,5 +136,33 @@ def sign_alert():
         return redirect('/login')
 
 
+@app.route('/update_alert', methods=['POST'])
+def update_alert():
+    if request.method == "POST":
+        bank_buy = request.form['bank_buy']
+        bank_sale = request.form['bank_sale']
+        currency = request.form['currency']
+        rate_exchange = request.form['rate_exchange']
+        if rate_exchange == 'cash':
+            All_alert.update_user_alert(session['email'], currency, rate_exchange, [bank_buy, bank_sale])
+            return redirect('/cash_alert')
+        else:
+            All_alert.update_user_alert(session['email'], currency, rate_exchange, [bank_buy, bank_sale])
+            return redirect('/sign_alert')
+
+
+@app.route('/delete_alert', methods=['POST'])
+def delete_alert():
+    if request.method == "POST":
+        currency = request.form['currency']
+        rate_exchange = request.form['rate_exchange']
+        if rate_exchange == 'cash':
+            All_alert.delete_user_alert(session['email'], currency, rate_exchange)
+            return redirect('/cash_alert')
+        else:
+            All_alert.delete_user_alert(session['email'], currency, rate_exchange)
+            return redirect('/sign_alert')
+
+
 if __name__ == '__main__':
     app.run(debug=True)

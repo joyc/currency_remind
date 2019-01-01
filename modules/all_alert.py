@@ -38,3 +38,8 @@ class All_alert:
         return Database.update(collection="all_alert",
                                query={"email": email, "currency": currency, "rate_exchange": rate_exchange},
                                data={"$set": {"price": price}})
+
+    @staticmethod
+    def delete_user_alert(email, currency, rate_exchange):
+        Database.remove(collection="all_alert",
+                        query={"email": email, "currency": currency, "rate_exchange": rate_exchange})

@@ -1,0 +1,22 @@
+.btn-update{
+    float: right;
+}
+.alert-card{
+    color: black;
+    margin-bottom: 20px;
+}
+.form-input{
+    color: blue;
+}
+.title{
+    margin-bottom: 30px;
+}
+.btn-home{
+    margin-left: 5px;
+}
+.btn-home a{
+    text-decoration: none;
+}
+.mb-herder{
+    padding-bottom: 20px;
+}
