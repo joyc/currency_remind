@@ -16,9 +16,9 @@ def initialize():
     Database.initialize()
     session['email'] = session.get('email')
     session['name'] = session.get('name')
-
+    # job schedul setting
     scheduler = BackgroundScheduler()
-    scheduler.add_job(check_alert, "interval", seconds=5)
+    # scheduler.add_job(check_alert, "interval", seconds=10)
     # scheduler.add_job(check_alert, "cron", day_of_week="0-4", hour="17", minute=30)
     scheduler.start()
 
